@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 500;
+    box-sizing: border-box;
+}
+
+body{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+#map{
+    height: 500px;
+}
+
+hr {
+    margin: 20px 0;
+}
