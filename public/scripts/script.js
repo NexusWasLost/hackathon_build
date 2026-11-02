@@ -22,9 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
     submitbtn.addEventListener("click", async function () {
         let address = locationInput.value;
         const loc = await getLocation(address);
-        renderMap(loc[0].lat, loc[0].lon, map);
-        console.log(loc);
-        marker = updateMarker(loc[0].lat, loc[0].lon, marker);
+        renderMap(loc[0].lat, loc[0].long, map);
+        marker = updateMarker(loc[0].lat, loc[0].long, marker);
     });
 
     renderMap(lat, long, map);
@@ -56,7 +55,6 @@ function createMarker(lat, long, map) {
 }
 
 async function getLocation(locationString) {
-    console.log(locationString);
     const params = new URLSearchParams({
         q: locationString,
         format: "json"
@@ -66,10 +64,31 @@ async function getLocation(locationString) {
         const response = await fetch(`https://nominatim.openstreetmap.org/search?${params}`);
         if (!response.ok) throw new Error();
         const jsonResponse = await response.json();
-        return jsonResponse;
+        const locations = formatLocationResponse(jsonResponse);
+        return locations;
     }
     catch (error) {
         console.log("Failed to get location");
         return { message: "Failed to get location" };
     }
+}
+
+function formatLocationResponse(response){
+    let validLocations = [];
+
+    for(let location of response){
+        if(location.addresstype == "city"){
+            console.log(location); //for debuggin purposes
+            validLocations.push({
+                lat: location.lat,
+                long: location.lon,
+                boundingBox: location.boundingbox,
+                name: location.name,
+                id: location.place_id,
+                fullAddress: location.display_name
+            });
+        }
+    }
+
+    return validLocations;
 }
