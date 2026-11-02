@@ -1,16 +1,14 @@
-export function updatePlaces(locations, updateMap) {
+export const renderPlaces = function (places, selectPlace) {
     const placesList = document.querySelector(".places-list");
     const placesCount = document.querySelector(".results-group:first-child .results-count");
 
     placesList.innerHTML = "";
-    placesCount.textContent = locations.length;
+    placesCount.textContent = places.length;
 
-    for (let location of locations) {
+    places.forEach(function (location, idx) {
         const place = document.createElement("div");
         place.classList.add("place-item");
-
-        place.dataset.lat = location.lat;
-        place.dataset.long = location.long;
+        if(idx === 0) place.classList.add("active");
 
         const name = document.createElement("h4");
         name.textContent = location.name;
@@ -20,18 +18,14 @@ export function updatePlaces(locations, updateMap) {
 
         place.appendChild(name);
         place.appendChild(address);
-        placesList.appendChild(place);
 
-        document.querySelectorAll(".place-item").forEach(function (item) {
-            item.classList.remove("active");
-            item.addEventListener("click", function(){
-                const currActiveItem = document.querySelector(".active");
-                currActiveItem.classList.remove("active");
-                item.classList.add("active");
-            });
+        place.addEventListener("click", function () {
+            const active = placesList.querySelector(".active");
+            if (active) active.classList.remove("active");
+            place.classList.add("active");
+            selectPlace(location);
         });
 
-        place.classList.add("active");
-
-    }
-}
+        placesList.appendChild(place);
+    });
+};
