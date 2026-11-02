@@ -3,15 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const latInput = document.querySelector(".lat");
     const longInput = document.querySelector(".long");
     const locationInput = document.querySelector(".address");
-
-    let map = initMap();
+    const gobtn = document.querySelector(".go-btn");
+    const submitbtn = document.querySelector(".address-submit");
 
     let lat = latInput.value || 51.505;
     let long = longInput.value || -0.09;
 
-    const gobtn = document.querySelector(".go-btn");
-    const submitbtn = document.querySelector(".address-submit");
-
+    let map = initMap();
     let marker = createMarker(lat, long, map);
 
     gobtn.addEventListener("click", function () {
