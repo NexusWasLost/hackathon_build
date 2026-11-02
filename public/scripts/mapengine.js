@@ -50,7 +50,7 @@ export const getLocation = async function (locationString) {
     }
     catch (error) {
         console.log("Failed to get location");
-        return { message: "Failed to get location" };
+        return [];
     }
 }
 
