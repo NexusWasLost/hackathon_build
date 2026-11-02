@@ -1,29 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const latInputs = document.querySelectorAll(".lat");
+    const longInputs = document.querySelectorAll(".long");
+    const locationInputs = document.querySelectorAll(".address");
+    const goButtons = document.querySelectorAll(".go-btn");
+    const submitButtons = document.querySelectorAll(".address-submit");
 
-    const latInput = document.querySelector(".lat");
-    const longInput = document.querySelector(".long");
-    const locationInput = document.querySelector(".address");
-    const gobtn = document.querySelector(".go-btn");
-    const submitbtn = document.querySelector(".address-submit");
-
-    let lat = latInput.value || 51.505;
-    let long = longInput.value || -0.09;
+    let lat = 51.505;
+    let long = -0.09;
 
     let map = initMap();
     let marker = createMarker(lat, long, map);
 
-    gobtn.addEventListener("click", function () {
-        lat = latInput.value;
-        long = longInput.value;
-        renderMap(lat, long, map);
-        marker = updateMarker(lat, long, marker);
+    //attach even listeners
+    goButtons.forEach(function(btn, x){
+        btn.addEventListener("click", function(){
+            lat = Number(latInputs[x].value);
+            long = Number(longInputs[x].value);
+            renderMap(lat, long, map);
+            marker = updateMarker(lat, long, marker);
+        })
     });
-
-    submitbtn.addEventListener("click", async function () {
-        let address = locationInput.value;
-        const loc = await getLocation(address);
-        renderMap(loc[0].lat, loc[0].long, map);
-        marker = updateMarker(loc[0].lat, loc[0].long, marker);
+    submitButtons.forEach(function(btn, x){
+        btn.addEventListener("click", async function(){
+            let address = locationInputs[x].value;
+            const loc = await getLocation(address);
+            renderMap(loc[0].lat, loc[0].long, map);
+            marker = updateMarker(loc[0].lat, loc[0].long, marker);
+        })
     });
 
     renderMap(lat, long, map);
