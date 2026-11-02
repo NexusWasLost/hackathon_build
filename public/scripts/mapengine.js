@@ -1,3 +1,5 @@
+import { updatePlaces } from "./ui.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     const latInputs = document.querySelectorAll(".lat");
     const longInputs = document.querySelectorAll(".long");
@@ -27,6 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
         btn.addEventListener("click", async function () {
             let address = locationInputs[x].value;
             global_loc = await getLocation(address);
+
+            //update Map list in UI
+            updatePlaces(global_loc);
 
             //re-render map, reset marker and update the bounding polygon
             renderMap(global_loc[0].lat, global_loc[0].long, map);
