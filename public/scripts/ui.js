@@ -19,11 +19,12 @@ export const renderPlaces = function (places, selectPlace) {
         place.appendChild(name);
         place.appendChild(address);
 
-        place.addEventListener("click", function () {
-            const active = placesList.querySelector(".active");
+        place.addEventListener("click", async function () {
+            const active = placesList.querySelector(".active"); //gets the first active box (should always be 1)
             if (active) active.classList.remove("active");
             place.classList.add("active");
-            selectPlace(location);
+            const comp = await selectPlace(location);
+            console.log(comp);
         });
 
         placesList.appendChild(place);

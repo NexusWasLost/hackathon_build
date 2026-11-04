@@ -1,5 +1,6 @@
 import { renderMap, getLocation } from "./mapengine.js"
 import { renderPlaces } from "./ui.js";
+import { getCompanies } from "./company.js";
 
 const latInputs = document.querySelectorAll(".lat");
 const longInputs = document.querySelectorAll(".long");
@@ -41,5 +42,6 @@ submitButtons.forEach(function (btn, x) {
         state = result[0];
         render();
         renderPlaces(result, selectPlace);
+        getCompanies(state.boundingBox);
     });
 });

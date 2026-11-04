@@ -59,7 +59,7 @@ function formatLocationResponse(response) {
 
     for (let location of response) {
         if (location.addresstype == "city") {
-            console.log(location); //for debuggin purposes
+            //console.log(location); //for debuggin purposes
 
             validLocations.push({
                 lat: location.lat,
